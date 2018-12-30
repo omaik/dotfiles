@@ -1,4 +1,4 @@
-
+stty -ixon
 
 source /Users/omaik/.profile
 
@@ -39,7 +39,7 @@ alias bastion='ssh -l omaikovych bastionhostnonprod.onlgn.net -p 23222'
 alias rs='bundle exec rspec'
 alias cop='bundle exec rubocop'
 
-# functions 
+# functions
 function shadow {
  ssh admin01-shadow0$1.use1.onlgn.net
 }
