@@ -25,6 +25,7 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # aliases
+alias ctags="`brew --prefix`/bin/ctags"
 alias admin='RAILS_ENV=development bundle exec puma -p 3001'
 alias portal='PORTAL=true RAILS_ENV=development bundle exec puma -p 3000'
 alias pumacached='ADMIN=true CACHED=true bundle exec puma -p 3001'
@@ -70,6 +71,11 @@ function upmysql {
  cd -
 }
 
+function startike {
+  ike init
+  ike start postgres rabbitmq redis-server
+  ike start traefik haproxy-flow haproxy-swarm-listener
+}
 function contbash {
   docker container exec -it $1 bash
 }
