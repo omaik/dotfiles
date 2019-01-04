@@ -39,6 +39,8 @@ alias dbconsole='psql -h localhost -U postgres --password'
 alias bastion='ssh -l omaikovych bastionhostnonprod.onlgn.net -p 23222'
 alias rs='bundle exec rspec'
 alias cop='bundle exec rubocop'
+alias v='vim'
+alias vi='vim'
 
 # functions
 function shadow {
