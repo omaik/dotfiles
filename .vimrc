@@ -5,6 +5,12 @@ set expandtab                   " use spaces, not tabs (optional)
 set smartindent
 set autoindent
 set scrolloff=4
+set noswapfile
+set ignorecase
+set smartcase
+set incsearch
+set nojoinspaces
+set hls
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
@@ -104,3 +110,5 @@ if has("clipboard")
     set clipboard+=unnamedplus
   endif
 endif
+" Commands
+command! Json %!python -m json.tool
