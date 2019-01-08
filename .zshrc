@@ -117,3 +117,4 @@ source /usr/local/opt/autoenv/activate.sh
 ssh-add ~/.ssh/id_rsa
 
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+export VAGRANT_HOME="/Volumes/vagrants/vagrant_home"
