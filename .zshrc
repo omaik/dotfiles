@@ -1,3 +1,4 @@
+# for vim
 stty -ixon
 
 source /Users/omaik/.profile
