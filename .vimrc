@@ -31,7 +31,7 @@ Plugin 'tpope/vim-rails'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'vim-ruby/vim-ruby'
-Plugin 'tomtom/tcomment_vim'
+Plugin 'tpope/vim-commentary'
 Plugin 'liuchengxu/space-vim-dark'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
@@ -42,7 +42,8 @@ Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'tmhedberg/matchit'
-let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
+" let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 let g:ackprg = "ag --vimgrep"
 " let g:ctrlp_use_caching = 0
@@ -70,7 +71,12 @@ nnoremap <silent><C-k> m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
 " this is Option+J and Option+K mappings
 nnoremap ∆ :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap ˚ :set paste<CR>m`O<Esc>``:set nopaste<CR>
-
+nnoremap Ô :m .+1<CR>==
+nnoremap  :m .-2<CR>==
+inoremap Ô <Esc>:m .+1<CR>==gi
+inoremap  <Esc>:m .-2<CR>==gi
+vnoremap Ô :m '>+1<CR>gv=gv
+vnoremap  :m '<-2<CR>gv=gv
 " tags related staff
 nmap <leader>n :tn<cr>
 nmap <leader>t :tag<space>
@@ -82,7 +88,10 @@ noremap <Down> <nop>
 noremap <Left> <nop>
 noremap <Right> <nop>
 
+"searching
 nmap <leader>f :Ack<space>
+nmap <leader>fbp :Ack<space>binding.pry<CR>
+
 map <C-n> :NERDTreeToggle<CR>
 
 autocmd BufWritePre * :%s/\s\+$//e
@@ -99,7 +108,8 @@ imap jj <esc>
 imap <C-a> <home>
 imap <C-e> <end>
 " coding aliases
-nmap <leader>pp obinding.pry<esc>
+nmap <leader>bp obinding.pry<esc>
+nmap <leader>dd :%d<cr>
 
 
 " Clipboard support for delete and yank
@@ -111,4 +121,6 @@ if has("clipboard")
   endif
 endif
 " Commands
+command! Q qall
+" command! Q! qall!
 command! Json %!python -m json.tool

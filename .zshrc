@@ -43,6 +43,11 @@ alias v='vim'
 alias vi='vim'
 
 # functions
+
+function update-rubies-list {
+  brew update
+  brew upgrade ruby-build
+}
 function shadow {
  ssh admin01-shadow0$1.use1.onlgn.net
 }
@@ -77,6 +82,7 @@ function startike {
   ike init
   ike start postgres rabbitmq redis-server
   ike start traefik haproxy-flow haproxy-swarm-listener
+  ike start encryption-service
 }
 function contbash {
   docker container exec -it $1 bash
