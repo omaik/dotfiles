@@ -7,5 +7,9 @@ nil.nil? # => true
 true.true? # => true
 String.class # => Class
 Class.class # => Class
+```
+
+
+```ruby
 
 ```
