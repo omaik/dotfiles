@@ -11,6 +11,8 @@ set smartcase
 set incsearch
 set nojoinspaces
 set hls
+set laststatus=2
+set statusline=%!getcwd()
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
@@ -27,32 +29,37 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'tpope/vim-rails'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'nanotech/jellybeans.vim'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-commentary'
-Plugin 'liuchengxu/space-vim-dark'
-Plugin 'tpope/vim-fugitive'
-Plugin 'scrooloose/nerdtree'
-Plugin 'junegunn/fzf.vim'
+Plugin 'tpope/vim-rails' "rails stuff
+Plugin 'ctrlpvim/ctrlp.vim' "search files
+Plugin 'nanotech/jellybeans.vim' "colorscheme
+Plugin 'vim-ruby/vim-ruby' "ruby stuff
+Plugin 'tpope/vim-commentary' "easy commenting
+Plugin 'tpope/vim-fugitive' "git
+Plugin 'scrooloose/nerdtree' "sidebar
 Plugin 'FelikZ/ctrlp-py-matcher'
 Plugin 'majutsushi/tagbar'
 Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'tmhedberg/matchit'
+Plugin 'Lokaltog/vim-distinguished'
+Plugin 'Townk/vim-autoclose'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'chiel92/vim-autoformat'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'ervandew/supertab'
 " let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 let g:ackprg = "ag --vimgrep"
-" let g:ctrlp_use_caching = 0
+let g:ctrlp_use_caching = 0
 
 call vundle#end()
 filetype plugin indent on
 set ruler
-set tags=./tags
+" set tags=./tags
 colorscheme jellybeans
+" colorscheme vim-distinguished
 " colorscheme space-vim-dark
 hi Comment cterm=italic
 let mapleader = "\<Space>"
@@ -61,10 +68,28 @@ runtime macros/matchit.vim
 nmap cp :let @+ = expand("%")<cr>
 nmap 0 ^
 
+" all leader mappings
 " files openining
 nmap <leader>vr :vs $MYVIMRC<cr>
 nmap <leader>so :source $MYVIMRC<cr>
 nmap <leader>zsh :vs ~/.zshrc<cr>
+" tags related staff
+nmap <leader>n :tn<cr>
+nmap <leader>t :tag<space>
+nnoremap <leader>. :CtrlPTag<cr>
+nmap <Leader>b :TagbarToggle<CR>
+"searching
+nmap <leader>f :Ack<space>
+nmap <leader>fbp :Ack<space>binding.pry<CR>
+
+map <Leader>w <C-w>w
+" coding aliases
+nmap <leader>bp obinding.pry<esc>
+nmap <leader>dd :%d<cr>
+"fast tabs with projects
+nmap <leader>oca :tabnew<cr>:lcd ~/work/core-api<cr>
+nmap <leader>omr :tabnew<cr>:lcd ~/work/onelogin.com<cr>
+nmap <leader>tcd :tabnew<cr>:lcd ~/work/
 " insert and delete empty lines
 nnoremap <silent><C-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
 nnoremap <silent><C-k> m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
@@ -77,25 +102,32 @@ inoremap Ô <Esc>:m .+1<CR>==gi
 inoremap  <Esc>:m .-2<CR>==gi
 vnoremap Ô :m '>+1<CR>gv=gv
 vnoremap  :m '<-2<CR>gv=gv
-" tags related staff
-nmap <leader>n :tn<cr>
-nmap <leader>t :tag<space>
-nnoremap <leader>. :CtrlPTag<cr>
-nmap <Leader>b :TagbarToggle<CR>
 " unmap arrow keys
 noremap <Up> <nop>
 noremap <Down> <nop>
 noremap <Left> <nop>
 noremap <Right> <nop>
 
-"searching
-nmap <leader>f :Ack<space>
-nmap <leader>fbp :Ack<space>binding.pry<CR>
+"Easymotion
+map \ <Plug>(easymotion-prefix)
+
+
 
 map <C-n> :NERDTreeToggle<CR>
 
+"autocommands
 autocmd BufWritePre * :%s/\s\+$//e
-map <Leader>w <C-w>w
+
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+"Highlight the ruler of 80 symbols
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
+
+
+
 " methods traversing
 nmap mm ]m
 nmap MM [m
@@ -107,9 +139,6 @@ imap kj <esc>
 imap jj <esc>
 imap <C-a> <home>
 imap <C-e> <end>
-" coding aliases
-nmap <leader>bp obinding.pry<esc>
-nmap <leader>dd :%d<cr>
 
 
 " Clipboard support for delete and yank
@@ -124,3 +153,4 @@ endif
 command! Q qall
 " command! Q! qall!
 command! Json %!python -m json.tool
+command! Tag !ctags -R --exclude=node_modules --exclude=docker --exclude=reports
