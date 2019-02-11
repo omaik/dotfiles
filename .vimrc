@@ -1,10 +1,10 @@
 set nocompatible              " be iMproved, required
-set showcmd
+set showcmd                   " shows command while typing it
 set tabstop=2 shiftwidth=2      " a tab is two spaces (or set this to 4)
 set expandtab                   " use spaces, not tabs (optional)
 set smartindent
 set autoindent
-set scrolloff=4
+set scrolloff=4 " mininum lines on screen below or above the cursor
 set noswapfile
 set ignorecase
 set smartcase
@@ -13,15 +13,14 @@ set nojoinspaces
 set hls
 set laststatus=2
 set statusline=%!getcwd()
-filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
 set relativenumber
-set number
 set listchars=tab:>-,trail:~,extends:>,precedes:<
 set list
 syntax on
+
+filetype off                  " required
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
@@ -36,36 +35,33 @@ Plugin 'vim-ruby/vim-ruby' "ruby stuff
 Plugin 'tpope/vim-commentary' "easy commenting
 Plugin 'tpope/vim-fugitive' "git
 Plugin 'scrooloose/nerdtree' "sidebar
-Plugin 'FelikZ/ctrlp-py-matcher'
-Plugin 'majutsushi/tagbar'
+Plugin 'FelikZ/ctrlp-py-matcher' "higher speed of ctrl+p
 Plugin 'mileszs/ack.vim'
+Plugin 'tmhedberg/matchit'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
-Plugin 'tmhedberg/matchit'
-Plugin 'Lokaltog/vim-distinguished'
 Plugin 'Townk/vim-autoclose'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'chiel92/vim-autoformat'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'ervandew/supertab'
+Plugin 'wikitopian/hardmode'
+call vundle#end()
 " let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 let g:ackprg = "ag --vimgrep"
 let g:ctrlp_use_caching = 0
 
-call vundle#end()
 filetype plugin indent on
-set ruler
-" set tags=./tags
 colorscheme jellybeans
-" colorscheme vim-distinguished
-" colorscheme space-vim-dark
 hi Comment cterm=italic
 let mapleader = "\<Space>"
 runtime macros/matchit.vim
 " normal mode mappings
+" copy path of current file
 nmap cp :let @+ = expand("%")<cr>
+" use 0 for going to text beggining
 nmap 0 ^
 
 " all leader mappings
@@ -74,17 +70,16 @@ nmap <leader>vr :vs $MYVIMRC<cr>
 nmap <leader>so :source $MYVIMRC<cr>
 nmap <leader>zsh :vs ~/.zshrc<cr>
 " tags related staff
-nmap <leader>n :tn<cr>
-nmap <leader>t :tag<space>
+" nmap <leader>n :tn<cr>
+" nmap <leader>t :tag<space>
 nnoremap <leader>. :CtrlPTag<cr>
-nmap <Leader>b :TagbarToggle<CR>
 "searching
 nmap <leader>f :Ack<space>
 nmap <leader>fbp :Ack<space>binding.pry<CR>
-
+nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
 map <Leader>w <C-w>w
 " coding aliases
-nmap <leader>bp obinding.pry<esc>
+nmap <leader>bp obinding.pry<esc>:w<cr>
 nmap <leader>dd :%d<cr>
 "fast tabs with projects
 nmap <leader>oca :tabnew<cr>:lcd ~/work/core-api<cr>
@@ -96,6 +91,7 @@ nnoremap <silent><C-k> m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
 " this is Option+J and Option+K mappings
 nnoremap ∆ :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap ˚ :set paste<CR>m`O<Esc>``:set nopaste<CR>
+" Swap selected lines
 nnoremap Ô :m .+1<CR>==
 nnoremap  :m .-2<CR>==
 inoremap Ô <Esc>:m .+1<CR>==gi
@@ -118,6 +114,7 @@ map <C-n> :NERDTreeToggle<CR>
 "autocommands
 autocmd BufWritePre * :%s/\s\+$//e
 
+" different cursors for different modes
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
@@ -126,17 +123,12 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
 
-
-
-" methods traversing
-nmap mm ]m
-nmap MM [m
-
 " insertion mode mappings
 imap <C-s> <esc>:w<cr>
 imap jk <esc>
 imap kj <esc>
 imap jj <esc>
+imap kk <esc>
 imap <C-a> <home>
 imap <C-e> <end>
 
@@ -151,6 +143,4 @@ if has("clipboard")
 endif
 " Commands
 command! Q qall
-" command! Q! qall!
-command! Json %!python -m json.tool
 command! Tag !ctags -R --exclude=node_modules --exclude=docker --exclude=reports

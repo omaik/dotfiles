@@ -45,10 +45,15 @@ alias vi='vim'
 
 # functions
 
+function shadowconsole {
+  bastion -t "ssh api01.use1.shadow01.onlgn.net -t 'sudo -i -u deploy bash -c \"cd /srv/onelogin_new/current && bundle exec script/console shadow\"'"
+
+}
 function update-rubies-list {
   brew update
   brew upgrade ruby-build
 }
+
 function shadow {
  ssh admin01-shadow0$1.use1.onlgn.net
 }
