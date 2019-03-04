@@ -14,10 +14,11 @@ set hls
 set laststatus=2
 set statusline=%!getcwd()
 set relativenumber
+set number
 set listchars=tab:>-,trail:~,extends:>,precedes:<
 set list
 syntax on
-
+vmap <Leader>b :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
 filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -46,6 +47,7 @@ Plugin 'chiel92/vim-autoformat'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'ervandew/supertab'
 Plugin 'wikitopian/hardmode'
+Plugin 'airblade/vim-matchquote'
 call vundle#end()
 " let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
@@ -85,6 +87,12 @@ nmap <leader>dd :%d<cr>
 nmap <leader>oca :tabnew<cr>:lcd ~/work/core-api<cr>
 nmap <leader>omr :tabnew<cr>:lcd ~/work/onelogin.com<cr>
 nmap <leader>tcd :tabnew<cr>:lcd ~/work/
+" open current file in sidebar
+nmap <leader>n :NERDTreeFind<cr>
+
+
+
+
 " insert and delete empty lines
 nnoremap <silent><C-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
 nnoremap <silent><C-k> m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
@@ -126,9 +134,7 @@ match OverLength /\%81v.\+/
 " insertion mode mappings
 imap <C-s> <esc>:w<cr>
 imap jk <esc>
-imap kj <esc>
 imap jj <esc>
-imap kk <esc>
 imap <C-a> <home>
 imap <C-e> <end>
 
