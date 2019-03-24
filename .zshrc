@@ -13,10 +13,6 @@ export ZSH=/Users/omaik/.oh-my-zsh
 ZSH_THEME="robbyrussell"
 export CDPATH=$CDPATH:/Users/omaik/work:/Users/omaik
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
   osx
@@ -78,12 +74,6 @@ function ngrok {
  /Users/omaik/Desktop/ngrok http $1
 }
 
-function upmysql {
- cd ~/vagrants/mysql-vagrant
- vagrant up
- cd -
-}
-
 function startike {
   ike init
   ike start postgres rabbitmq redis-server
@@ -125,6 +115,12 @@ function ikedb {
 
 function rebuild-local {
   ike rebuild $1 -c ~/work/onelogin/docker/infrakit
+}
+
+function muxrock {
+  MUX_PORT=`ike ls | grep javascript | awk -F ":" '{print $4}' | awk -F'->' '{print $1}'`
+  cd ~/Desktop
+  ./ngrok http $MUX_PORT
 }
 
 RPROMPT="%F{green}[%D{%L:%M:%S}]%F{white}"

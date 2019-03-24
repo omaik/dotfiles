@@ -13,7 +13,6 @@ set nojoinspaces
 set hls
 set laststatus=2
 set statusline=%!getcwd()
-set relativenumber
 set number
 set listchars=tab:>-,trail:~,extends:>,precedes:<
 set list
@@ -91,7 +90,11 @@ nmap <leader>tcd :tabnew<cr>:lcd ~/work/
 nmap <leader>n :NERDTreeFind<cr>
 
 
-
+" indent the lines using Command+[]
+nmap <D-[> <<
+nmap <D-]> >>
+vmap <D-[> <gv
+vmap <D-]> >gv
 
 " insert and delete empty lines
 nnoremap <silent><C-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
