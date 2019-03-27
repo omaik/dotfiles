@@ -80,7 +80,7 @@ function startike {
   ike start traefik haproxy-flow haproxy-swarm-listener
   ike start encryption-service -t ike
   ike start javascript-mux
-  if [ $1 = 'mr' ]; then
+  if [ "$1" = 'mr' ]; then
     ike start monorail-admin monorail-portal core-api
   fi
 }
