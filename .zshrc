@@ -76,13 +76,14 @@ function ngrok {
 
 function startike {
   ike init
-  ike start postgres rabbitmq redis-server
-  ike start traefik haproxy-flow haproxy-swarm-listener
-  ike start encryption-service -t ike
-  ike start javascript-mux
+  ike start postgres rabbitmq redis-server &
+  ike start traefik haproxy-flow haproxy-swarm-listener &
+  ike start encryption-service -t ike &
+  ike start javascript-mux &
   if [ "$1" = 'mr' ]; then
-    ike start monorail-admin monorail-portal core-api
+    ike start monorail-admin monorail-portal core-api &
   fi
+  wait
 }
 function contbash {
   docker container exec -it $1 bash
@@ -111,10 +112,6 @@ function ikeconsole {
 function ikedb {
   CONTAINER=`docker ps --filter "name=ol_postgres" --filter "status=running" -q`
   docker exec -it $CONTAINER bash -c "source /root/.bash_aliases; psql -U postgres"
-}
-
-function rebuild-local {
-  ike rebuild $1 -c ~/work/onelogin/docker/infrakit
 }
 
 function muxrock {
