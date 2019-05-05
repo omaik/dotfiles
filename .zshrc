@@ -12,11 +12,12 @@ export ZSH=/Users/omaik/.oh-my-zsh
 
 ZSH_THEME="robbyrussell"
 export CDPATH=$CDPATH:/Users/omaik/work:/Users/omaik
-
+export FZF_BASE=/usr/local/opt/fzf
 plugins=(
   git
   osx
   terminalapp
+  zfz
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -75,14 +76,13 @@ function ngrok {
 }
 
 function startike {
+  services=(postgres rabbitmq redis-server traefik haproxy-flow haproxy-swarm-listener \
+    "encryption-service -t ike" javascript-mux monorail-admin monorail-portal core-api  )
   ike init
-  ike start postgres rabbitmq redis-server &
-  ike start traefik haproxy-flow haproxy-swarm-listener &
-  ike start encryption-service -t ike &
-  ike start javascript-mux &
-  if [ "$1" = 'mr' ]; then
-    ike start monorail-admin monorail-portal core-api &
-  fi
+  for service in "${services[@]}"
+  do
+    ike start `echo $service` &
+  done
   wait
 }
 function contbash {
@@ -127,3 +127,5 @@ ssh-add ~/.ssh/id_rsa
 
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 export VAGRANT_HOME="/Volumes/vagrants/vagrant_home"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -29,14 +29,14 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'tpope/vim-rails' "rails stuff
-Plugin 'ctrlpvim/ctrlp.vim' "search files
-Plugin 'FelikZ/ctrlp-py-matcher' "higher speed of ctrl+p
+" Plugin 'ctrlpvim/ctrlp.vim' "search files
+" Plugin 'FelikZ/ctrlp-py-matcher' "higher speed of ctrl+p
 Plugin 'nanotech/jellybeans.vim' "colorscheme
 Plugin 'vim-ruby/vim-ruby' "ruby stuff
 Plugin 'tpope/vim-commentary' "easy commenting
 Plugin 'tpope/vim-fugitive' "git
 Plugin 'scrooloose/nerdtree' "sidebar
-Plugin 'mileszs/ack.vim' "search all files
+" Plugin 'mileszs/ack.vim' "search all files
 Plugin 'tmhedberg/matchit'
 Plugin 'tpope/vim-surround' "magic
 Plugin 'tpope/vim-repeat' " ultra magic
@@ -51,8 +51,13 @@ Plugin 'vim-airline/vim-airline' " statusbar
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'joshdick/onedark.vim' " theme
 Plugin 'godlygeek/tabular' " great allignment
+set rtp+=/usr/local/opt/fzf
+Plugin 'junegunn/fzf.vim'
+" GO
+" Plugin 'fatih/vim-go'
 call vundle#end()
 " let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
+let g:SuperTabDefaultCompletionType = "context"
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 let g:ackprg = "ag --vimgrep"
@@ -74,6 +79,19 @@ nmap gst :Gstatus<cr>
 " use 0 for going to text beggining
 nmap 0 ^
 
+" ZFZ mappings
+nmap <C-p> :GFiles<cr>
+nmap <leader>P :Files<cr>
+nmap <D-r> :BTags<cr>
+nmap <C-f> :Ag<space>
+nmap <C-f>bp :Ag<space>binding.pry<CR>
+
+
+nmap <Leader>: :History:<CR>
+nmap <leader>/ :History/<cr>
+
+let g:fzf_layout = { 'down': '~13%' }
+
 " open terminal
 nmap <leader>t :term<cr>
 "show changes diff
@@ -88,8 +106,6 @@ nmap <leader>zsh :vs ~/.zshrc<cr>
 " nmap <leader>t :tag<space>
 nnoremap <leader>. :CtrlPTag<cr>
 "searching
-nmap <leader>f :Ack<space>
-nmap <leader>fbp :Ack<space>binding.pry<CR>
 nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
 map <Leader>w <C-w>w
 " coding aliases
