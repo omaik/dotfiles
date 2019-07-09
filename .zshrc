@@ -96,7 +96,7 @@ function ikebash {
 
 function ikespec {
   CONTAINER=`docker ps --filter "name=ol_$1" --filter "status=running" -q`
-  docker exec -it $CONTAINER bash -c "source /root/.bash_aliases; bundle exec spec $2"
+  docker exec -it $CONTAINER bash -c "bundle exec spec $2"
 }
 
 function ikeworker {

@@ -50,6 +50,7 @@ Plugin 'airblade/vim-matchquote' "matches and begging of quote
 Plugin 'vim-airline/vim-airline' " statusbar
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'joshdick/onedark.vim' " theme
+Plugin 'mhartington/oceanic-next' " theme
 Plugin 'godlygeek/tabular' " great allignment
 set rtp+=/usr/local/opt/fzf
 Plugin 'junegunn/fzf.vim'
@@ -68,7 +69,11 @@ let NERDTreeDirArrows = 1
 filetype plugin indent on
 " colorscheme jellybeans
 set background=dark
-colorscheme onedark
+" colorscheme onedark
+let g:oceanic_next_terminal_bold = 1
+let g:oceanic_next_terminal_italic = 1
+colorscheme OceanicNext
+
 hi Comment cterm=italic
 let mapleader = "\<Space>"
 runtime macros/matchit.vim
