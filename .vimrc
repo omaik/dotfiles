@@ -52,7 +52,11 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'joshdick/onedark.vim' " theme
 Plugin 'mhartington/oceanic-next' " theme
 Plugin 'godlygeek/tabular' " great allignment
+Plugin 'gosukiwi/vim-atom-dark'
+Plugin 'sickill/vim-monokai'
+Plugin 'zxqfl/tabnine-vim'
 set rtp+=/usr/local/opt/fzf
+set rtp+=~/tabnine-vim
 Plugin 'junegunn/fzf.vim'
 " GO
 " Plugin 'fatih/vim-go'
@@ -72,7 +76,10 @@ set background=dark
 " colorscheme onedark
 let g:oceanic_next_terminal_bold = 1
 let g:oceanic_next_terminal_italic = 1
-colorscheme OceanicNext
+syntax enable
+colorscheme monokai
+" colorscheme OceanicNext
+" colorscheme atom-dark
 
 hi Comment cterm=italic
 let mapleader = "\<Space>"
@@ -106,10 +113,7 @@ nmap <leader>diff :w !diff % -<cr>
 nmap <leader>vr :vs $MYVIMRC<cr>
 nmap <leader>so :source $MYVIMRC<cr>
 nmap <leader>zsh :vs ~/.zshrc<cr>
-" tags related staff
-" nmap <leader>n :tn<cr>
-" nmap <leader>t :tag<space>
-nnoremap <leader>. :CtrlPTag<cr>
+
 "searching
 nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
 map <Leader>w <C-w>w

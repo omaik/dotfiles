@@ -1,5 +1,5 @@
 # for vim
-stty -ixon
+# stty -ixon
 
 source /Users/omaik/.profile
 
@@ -46,6 +46,12 @@ function shadowconsole {
   bastion -t "ssh api01.use1.shadow01.onlgn.net -t 'sudo -i -u deploy bash -c \"cd /srv/onelogin_new/current && bundle exec script/console shadow\"'"
 
 }
+
+function fixtagsonhost {
+  bastion -t "rm -rf ~/.ssh/known_hosts"
+  bastion -t "ssh $1 -t 'sudo -i -u deploy bash -c \"echo 'prod' > /srv/onelogin_new/current/config/workers_env\"'"
+}
+
 function update-rubies-list {
   brew update
   brew upgrade ruby-build
@@ -69,10 +75,6 @@ function gpf {
 
 function gam {
  git add -u
-}
-
-function ngrok {
- /Users/omaik/Desktop/ngrok http $1
 }
 
 function startike {
@@ -116,8 +118,8 @@ function ikedb {
 
 function muxrock {
   MUX_PORT=`ike ls | grep javascript | awk -F ":" '{print $4}' | awk -F'->' '{print $1}'`
-  cd ~/Desktop
-  ./ngrok http $MUX_PORT
+
+  ngrok http $MUX_PORT
 }
 
 RPROMPT="%F{green}[%D{%L:%M:%S}]%F{white}"
@@ -129,3 +131,8 @@ export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/b
 export VAGRANT_HOME="/Volumes/vagrants/vagrant_home"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+export NVM_DIR="${XDG_CONFIG_HOME/:-$HOME/.}nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
